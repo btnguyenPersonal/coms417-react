@@ -15,3 +15,14 @@ test('pressing submit with no info', async () => {
     await fireEvent.click(form);
     expect(screen.queryByText("User is successfully logged in")).toBeNull();
 });
+
+test('pressing submit with correct info', async () => {
+    render(<Login />);
+    const form = screen.getByRole("login");
+    const usernameField = screen.getByTestId("usernameField");
+    await userEvent.type(usernameField, 'user1');
+    const passwordField = screen.getByTestId("passwordField");
+    await userEvent.type(usernameField, 'football');
+    await fireEvent.click(form);
+    expect(screen.queryByText("User is successfully logged in"));
+});
