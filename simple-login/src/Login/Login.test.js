@@ -52,3 +52,29 @@ test('failed user1 login', async () => {
   await fireEvent.click(form);
   expect(screen.queryByText("invalid password"));
 });
+
+test('incorrect username, correct password', async () => {
+  render(<Login />);
+  const form = screen.getByRole("login");
+  const username = 'brockPurdy';
+  const pass = 'football';
+  const userNameInput = screen.getByText('Username');
+  const passwordInput = screen.getByText('Password');
+  userEvent.type(userNameInput, username);
+  userEvent.type(passwordInput, pass);
+  await fireEvent.click(form);
+  expect(screen.queryByText("invalid username"));
+});
+
+test('correct username, incorrect password', async () => {
+  render(<Login />);
+  const form = screen.getByRole("login");
+  const username = 'user4';
+  const pass = 'neekoWasTaken';
+  const userNameInput = screen.getByText('Username');
+  const passwordInput = screen.getByText('Password');
+  userEvent.type(userNameInput, username);
+  userEvent.type(passwordInput, pass);
+  await fireEvent.click(form);
+  expect(screen.queryByText("invalid password"));
+});
